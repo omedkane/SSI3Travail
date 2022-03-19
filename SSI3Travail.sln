@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseSimulator", "DatabaseSimulator\DatabaseSimulator.csproj", "{07CC0199-A2A8-43EA-AF9E-F225964D49C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseSimulatorTest", "DatabaseSimulatorTest\DatabaseSimulatorTest.csproj", "{538B6921-204D-45D2-8284-BA1C3D8D4D75}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07CC0199-A2A8-43EA-AF9E-F225964D49C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07CC0199-A2A8-43EA-AF9E-F225964D49C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07CC0199-A2A8-43EA-AF9E-F225964D49C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07CC0199-A2A8-43EA-AF9E-F225964D49C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{538B6921-204D-45D2-8284-BA1C3D8D4D75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{538B6921-204D-45D2-8284-BA1C3D8D4D75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{538B6921-204D-45D2-8284-BA1C3D8D4D75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{538B6921-204D-45D2-8284-BA1C3D8D4D75}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
