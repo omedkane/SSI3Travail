@@ -1,24 +1,24 @@
 namespace DatabaseSimulator;
-public interface INumChain
+public interface IIntChain
 {
 	// Retourne le nombre
 	public int Get();
 
 	// Ajoute "num" au nombre
-	public NumChain Add(int num);
+	public IntChain Add(int num);
 	
 	// Soustrait "num" au nombre
-	public NumChain Sub(int num);
+	public IntChain Sub(int num);
 	
 	// Multiplie le nombre par "num";
-	public NumChain Times(int num);
+	public IntChain Times(int num);
 
 	// Divise le nombre par "num"
-	public NumChain DivBy(int num);
+	public IntChain DivBy(int num);
 
 	// Incrémente le nombre
-	public NumChain Increment();
+	public IntChain Increment();
 
 	// Décremente le nombre
-	public NumChain Decrement();
+	public IntChain Decrement();
 }

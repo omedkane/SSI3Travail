@@ -6,7 +6,7 @@ namespace DatabaseSimulatorTest;
 [TestClass]
 public class NumChainWrittenTests
 {
-	NumChain Chain = new(20);
+	IntChain Chain = new(20);
 	[TestMethod]
 	public void Add()
 	{
@@ -64,7 +64,7 @@ public class NumChainWrittenTests
 	}
 
 	[TestMethod]
-	public void Chaining()
+	public void ChainedOperationsTest()
 	{
 		Chain.Add(10).Sub(10).Times(2).DivBy(1).Increment().Decrement();
 
