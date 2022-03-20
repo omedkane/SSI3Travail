@@ -1,14 +1,14 @@
 ﻿namespace DatabaseSimulator
 {
-    public class NumChain: INumChain
+    public class IntChain: IIntChain
 	{
 		private int Value = 0;
 
-		public NumChain()
+		public IntChain()
 		{
 		}
 
-		public NumChain(int value)
+		public IntChain(int value)
 		{
 			this.Value = value;
 		}
@@ -18,37 +18,37 @@
 			return this.Value;
 		}
 
-		public NumChain Add(int num)
+		public IntChain Add(int num)
 		{
 			Value += num;
 			return this;
 		}
 
-		public NumChain Sub(int num)
+		public IntChain Sub(int num)
 		{
 			Value -= num;
 			return this;
 		}
 
-		public NumChain Times(int num)
+		public IntChain Times(int num)
 		{
 			Value *= num;
 			return this;
 		}
 
-		public NumChain DivBy(int num)
+		public IntChain DivBy(int num)
 		{
 			Value /= num;
 			return this;
 		}
 
-		public NumChain Increment()
+		public IntChain Increment()
 		{
 			Value++;
 			return this;
 		}
 
-		public NumChain Decrement()
+		public IntChain Decrement()
 		{
 			Value--;
 			return this;
