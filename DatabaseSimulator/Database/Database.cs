@@ -2,7 +2,8 @@ namespace DatabaseSimulator;
 
 using DatabaseSimulator.Exceptions;
 using DatabaseSimulator.Miscellaneous;
-public class Database
+
+public class Database : IDatabase
 {
 	private readonly Dictionary<Type, dynamic>
 	Tables = new Dictionary<Type, dynamic>();
