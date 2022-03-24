@@ -10,14 +10,10 @@
 //     {
 //         private MockRepository mockRepository;
 
-
-
 //         [TestInitialize]
 //         public void TestInitialize()
 //         {
 //             this.mockRepository = new MockRepository(MockBehavior.Strict);
-
-
 //         }
 
 //         private ObjectHelper CreateObjectHelper()
@@ -34,9 +30,7 @@
 //             Type? typeOfTarget = null;
 
 //             // Act
-//             var result = objectHelper.GetCommonProperties(
-//                 typeOfSource,
-//                 typeOfTarget);
+//             var result = objectHelper.GetCommonProperties(typeOfSource, typeOfTarget);
 
 //             // Assert
 //             Assert.Fail();
@@ -60,7 +54,8 @@
 //                 target,
 //                 typeOfSource,
 //                 typeOfTarget,
-//                 commonProperties);
+//                 commonProperties
+//             );
 
 //             // Assert
 //             Assert.Fail();
@@ -77,10 +72,7 @@
 //             object value = null;
 
 //             // Act
-//             objectHelper.Set(
-//                 target,
-//                 property,
-//                 value);
+//             objectHelper.Set(target, property, value);
 
 //             // Assert
 //             Assert.Fail();

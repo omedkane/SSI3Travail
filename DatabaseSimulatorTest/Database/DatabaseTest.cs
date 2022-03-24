@@ -9,79 +9,67 @@ namespace DatabaseSimulatorTest;
 [TestClass]
 public class DatabaseTest
 {
-	private readonly Database Database = new();
-	private readonly User testSubject =
-		new(
-			firstName: "Lionel",
-			lastName: "Messi",
-			birthday: DateTime.Now,
-			email: "leomessi@goat.com"
-		);
+    private readonly Database Database = new();
+    private readonly User testSubject =
+        new(
+            firstName: "Lionel",
+            lastName: "Messi",
+            birthday: DateTime.Now,
+            email: "leomessi@goat.com"
+        );
 
-	[TestMethod]
-	public void GetTable()
-	{
+    [TestMethod]
+    public void GetTable()
+    {
+        Database.CreateTable(testSubject);
 
+        Table<User> justAddedTable = Database.GetTable<User>();
 
-		Database.CreateTable(testSubject);
+        Assert.AreSame(justAddedTable.GetAll().First().Record, testSubject);
+    }
 
-		Table<User> justAddedTable = Database.GetTable<User>();
+    [TestMethod]
+    public void ReadCreateAndRemoveTable()
+    {
+        // Makes sure there is no User Table
+        Assert.ThrowsException<InexistantTableException>(() => Database.GetTable<User>());
 
-		Assert.AreSame(
-			justAddedTable.GetAll().First().Record,
-			testSubject
-		);
-	}
+        // Adds User Table With testSubject as first record
+        Database.CreateTable(testSubject);
 
-	[TestMethod]
-	public void ReadCreateAndRemoveTable()
-	{
-		// Makes sure there is no User Table
-		Assert.ThrowsException<InexistantTableException>(
-			() => Database.GetTable<User>()
-		);
+        // Get newly added table from the database
+        Table<User> justAddedTable = Database.GetTable<User>();
 
-		// Adds User Table With testSubject as first record 
-		Database.CreateTable(testSubject);
+        // Makes sure Row has been added !
+        Assert.AreSame(justAddedTable.GetAll().First().Record, testSubject);
 
-		// Get newly added table from the database
-		Table<User> justAddedTable = Database.GetTable<User>();
+        Database.Remove<User>();
 
-		// Makes sure Row has been added !
-		Assert.AreSame(
-			justAddedTable.GetAll().First().Record,
-			testSubject
-		);
+        // Makes sure there is no User Table ANYMORE
+        Assert.ThrowsException<InexistantTableException>(() => Database.GetTable<User>());
+    }
 
-		Database.Remove<User>();
+    [TestMethod]
+    public void UpdateTable()
+    {
+        User user = testSubject;
+        Database.CreateTable(user);
+        Table<User> userTable = Database.GetTable<User>();
 
-		// Makes sure there is no User Table ANYMORE
-		Assert.ThrowsException<InexistantTableException>(
-			() => Database.GetTable<User>()
-		);
-	}
+        Database.Update<User, DummyUser>();
 
-	[TestMethod]
-	public void UpdateTable()
-	{
-		User user = testSubject;
-		Database.CreateTable(user);
-		Table<User> userTable = Database.GetTable<User>();
+        Table<DummyUser> dummyUserTable = Database.GetTable<DummyUser>();
+        Row<DummyUser> dummyUser = dummyUserTable.GetAll().First();
 
-		Database.Update<User, DummyUser>();
+        Assert.IsTrue(
+            user.ID == dummyUser.ID
+                && user.FirstName == dummyUser.Record.FirstName
+                && user.Email == dummyUser.Record.Email
+                && user.Birthday.Equals(dummyUser.Record.Birthday)
+        );
 
-		Table<DummyUser> dummyUserTable = Database.GetTable<DummyUser>();
-		Row<DummyUser> dummyUser = dummyUserTable.GetAll().First();
-
-		Assert.IsTrue(
-			user.ID == dummyUser.ID &&
-			user.FirstName == dummyUser.Record.FirstName &&
-			user.Email == dummyUser.Record.Email &&
-			user.Birthday.Equals(dummyUser.Record.Birthday)
-		);
-
-		Assert.ThrowsException<InexistantPropertyException>(
-			() => dummyUser.Update("LastName", "Messi")
-		);
-	}
+        Assert.ThrowsException<InexistantPropertyException>(
+            () => dummyUser.Update("LastName", "Messi")
+        );
+    }
 }

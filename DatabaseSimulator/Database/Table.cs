@@ -2,114 +2,119 @@ namespace DatabaseSimulator;
 
 public class Table<Model> : ITable<Model> where Model : TableModel
 {
-	private readonly Dictionary<Guid, Row<Model>> Rows = new Dictionary<Guid, Row<Model>>();
+    private readonly Dictionary<Guid, Row<Model>> Rows = new Dictionary<Guid, Row<Model>>();
 
-	internal Table(Row<Model> record) => Rows.Add(record.ID, record);
+    internal Table(Row<Model> record) => Rows.Add(record.ID, record);
 
-	public int Count { get => Rows.Count; }
-	public void Insert(Model record) => Rows.Add(record.ID, new Row<Model>(record));
+    public int Count
+    {
+        get => Rows.Count;
+    }
 
-	public void InsertAll(IEnumerable<Model> records)
-	{
-		foreach (Model record in records)
-			Insert(record);
-	}
+    public void Insert(Model record) => Rows.Add(record.ID, new Row<Model>(record));
 
-	public Row<Model> Find(Guid id) => Rows[id];
-	public QueryResult<Row<Model>, Guid> FindAll(IEnumerable<Guid> listOfIDs)
-	{
-		QueryResult<Row<Model>, Guid> queryResult = new QueryResult<Row<Model>, Guid>();
-		foreach (Guid id in listOfIDs)
-		{
-			try
-			{
-				Row<Model> row = Rows[id];
-				queryResult.AddFound(row);
-			}
-			catch (System.Exception)
-			{
-				queryResult.AddNotFound(id);
-			}
-		}
-		return queryResult;
-	}
+    public void InsertAll(IEnumerable<Model> records)
+    {
+        foreach (Model record in records)
+            Insert(record);
+    }
 
-	public List<Row<Model>> FindWhere(Func<Model, bool> where, int? limit = null)
-	{
-		List<Row<Model>> rows = Rows.Values.ToList();
-		List<Row<Model>> results = new List<Row<Model>>();
+    public Row<Model> Find(Guid id) => Rows[id];
 
-		foreach (Row<Model> row in rows)
-		{
-			if (where(row.Record))
-			{
-				results.Add(row);
-				if (limit is not null && results.Count == limit)
-					break;
-			}
-		}
+    public QueryResult<Row<Model>, Guid> FindAll(IEnumerable<Guid> listOfIDs)
+    {
+        QueryResult<Row<Model>, Guid> queryResult = new QueryResult<Row<Model>, Guid>();
+        foreach (Guid id in listOfIDs)
+        {
+            try
+            {
+                Row<Model> row = Rows[id];
+                queryResult.AddFound(row);
+            }
+            catch (System.Exception)
+            {
+                queryResult.AddNotFound(id);
+            }
+        }
+        return queryResult;
+    }
 
-		return results;
-	}
+    public List<Row<Model>> FindWhere(Func<Model, bool> where, int? limit = null)
+    {
+        List<Row<Model>> rows = Rows.Values.ToList();
+        List<Row<Model>> results = new List<Row<Model>>();
 
-	public Row<Model> FirstWhere(Func<Model, bool> where)
-	{
-		return FindWhere(where, 1).First();
-	}
+        foreach (Row<Model> row in rows)
+        {
+            if (where(row.Record))
+            {
+                results.Add(row);
+                if (limit is not null && results.Count == limit)
+                    break;
+            }
+        }
 
-	public MutationResult<Guid, Guid> UpdateAll(IEnumerable<Guid> listOfIDs, Action<Model> updator)
-	{
-		MutationResult<Guid, Guid> result = new MutationResult<Guid, Guid>();
+        return results;
+    }
 
-		foreach (Guid id in listOfIDs)
-		{
-			try
-			{
-				Row<Model> row = Rows[id];
+    public Row<Model> FirstWhere(Func<Model, bool> where)
+    {
+        return FindWhere(where, 1).First();
+    }
 
-				row.Update(updator);
+    public MutationResult<Guid, Guid> UpdateAll(IEnumerable<Guid> listOfIDs, Action<Model> updator)
+    {
+        MutationResult<Guid, Guid> result = new MutationResult<Guid, Guid>();
 
-				result.AddSuccess(id);
-			}
-			catch (System.Exception)
-			{
-				result.AddFailure(id);
-			}
-		}
+        foreach (Guid id in listOfIDs)
+        {
+            try
+            {
+                Row<Model> row = Rows[id];
 
-		return result;
-	}
+                row.Update(updator);
 
-	public List<Guid> UpdateWhere(Func<Model, bool> where, Action<Model> updator)
-	{
-		List<Guid> result = new List<Guid>();
+                result.AddSuccess(id);
+            }
+            catch (System.Exception)
+            {
+                result.AddFailure(id);
+            }
+        }
 
-		FindWhere(where)
-		.ForEach(row =>
-		{
-			row.Update(updator);
-			result.Add(row.ID);
+        return result;
+    }
 
-		});
+    public List<Guid> UpdateWhere(Func<Model, bool> where, Action<Model> updator)
+    {
+        List<Guid> result = new List<Guid>();
 
+        FindWhere(where)
+            .ForEach(
+                row =>
+                {
+                    row.Update(updator);
+                    result.Add(row.ID);
+                }
+            );
 
-		return result;
-	}
+        return result;
+    }
 
-	public List<Row<Model>> GetAll() => Rows.Values.ToList();
+    public List<Row<Model>> GetAll() => Rows.Values.ToList();
 
-	public void Remove(Guid id) => Rows.Remove(id);
-	public List<Guid> RemoveWhere(Func<Model, bool> where)
-	{
-		List<Row<Model>> targetRows = FindWhere(where);
-		List<Guid> removedRows = new List<Guid>();
-		foreach (Row<Model> row in targetRows)
-		{
-			Rows.Remove(row.ID);
-			removedRows.Add(row.ID);
-		}
+    public void Remove(Guid id) => Rows.Remove(id);
 
-		return removedRows;
-	}
+    public List<Guid> RemoveWhere(Func<Model, bool> where)
+    {
+        List<Row<Model>> targetRows = FindWhere(where);
+        List<Guid> removedRows = new List<Guid>();
+        foreach (Row<Model> row in targetRows)
+        {
+            Rows.Remove(row.ID);
+            removedRows.Add(row.ID);
+        }
 
+        return removedRows;
+    }
 }
