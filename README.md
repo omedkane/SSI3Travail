@@ -102,7 +102,7 @@ N'étant pas une surprise, le code généré ne teste pas magiquement les métho
 
 **UTBG** travaille conjointement avec un **framework de mocking** utilisé pour créer des objets substitutifs, et il supporte une variété de frameworks incluant le framework le plus populaire, **Moq**.
 
-La classe de tests unitaires générée est structurée de la suivante sorte :
+La classe de tests unitaires générée (ou unité de test) est structurée de la suivante sorte :
 
 - Un membre de type `MockRepository`, une classe répertoire utilitaire pour fabriquer plusieurs **mocks** lorsqu'une vérification cohérente est souhaitée pour la totalité de ces derniers ;
   
@@ -296,27 +296,27 @@ La classe `Table` implémente l'interface `ITable` :
 ```csharp
 public interface ITable<Model> where Model : TableModel {
 
-    public void Insert(Model record);
+    void Insert(Model record);
 
-    public void InsertAll(IEnumerable<Model> records);
+    void InsertAll(IEnumerable<Model> records);
 
-    public Row<Model> Find(Guid id);
+    Row<Model> Find(Guid id);
 
-    public QueryResult<Row<Model>, Guid> FindAll(IEnumerable<Guid> listOfIDs);
+    QueryResult<Row<Model>, Guid> FindAll(IEnumerable<Guid> listOfIDs);
 
-    public List<Row<Model>> FindWhere(Func<Model, bool> where, int? limit);
+    List<Row<Model>> FindWhere(Func<Model, bool> where, int? limit);
 
-    public Row<Model> FirstWhere(Func<Model, bool> where);
+    Row<Model> FirstWhere(Func<Model, bool> where);
 
-    public MutationResult<Guid, Guid> UpdateAll(IEnumerable<Guid> listOfIDs, Action<Model> updator);
+    MutationResult<Guid, Guid> UpdateAll(IEnumerable<Guid> listOfIDs, Action<Model> updator);
 
-    public List<Guid> UpdateWhere(Func<Model, bool> where, Action<Model> updator);
+    List<Guid> UpdateWhere(Func<Model, bool> where, Action<Model> updator);
 
-    public void Remove(Guid id);
+    void Remove(Guid id);
 
-    public List<Guid> RemoveWhere(Func<Model, bool> where);
+    List<Guid> RemoveWhere(Func<Model, bool> where);
 
-    public List<Row<Model>> GetAll();
+    List<Row<Model>> GetAll();
 
 }
 ```
