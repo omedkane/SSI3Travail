@@ -360,7 +360,7 @@ Database {
 
 Pour conduire un test cohésif d'un système, il est fondamental de commencer de la classe la plus indépendante à la plus dépendante. Dans notre cas, la classe `ObjectHelper` est la plus indépendante car elle ne fait appel à aucune méthode des autres classes et n'accéde à aucun membre de ces dernières, puis comme illustré dans le schéma ci-dessus `Row`, `Table` et finalement `Database`.
 
-Voir l'intégralité du test [ici](https://github.com/omedkane/SSI3Travail/blob/master/DatabaseSimulatorTest/).
+Voir l'intégralité du test [ici](https://github.com/omedkane/SSI3Travail/blob/master/DatabaseSimulatorTest/Database).
 
 ### Étape 3 : Impact des modifications mineures et majeures
 
